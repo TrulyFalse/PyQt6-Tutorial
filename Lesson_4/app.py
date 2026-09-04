@@ -1,14 +1,6 @@
 import sys
 
-from PyQt6.QtWidgets import (
-    QApplication,
-    QHBoxLayout,
-    QMainWindow,
-    QPushButton,
-    QStackedLayout,
-    QVBoxLayout,
-    QWidget,
-)
+from PyQt6.QtWidgets import QApplication, QMainWindow, QTabWidget
 
 from layout_colorwidget import Color
 
@@ -16,46 +8,17 @@ from layout_colorwidget import Color
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+
         self.setWindowTitle("My App")
 
-        pagelayout = QVBoxLayout()
-        button_layout = QHBoxLayout()
-        self.stacklayout = QStackedLayout()
+        tabs = QTabWidget()
+        tabs.setTabPosition(QTabWidget.TabPosition.West)
+        tabs.setMovable(True)
 
-        button_layout.setSpacing(0)
-        pagelayout.setContentsMargins(0,0,0,0)
-        pagelayout.setSpacing(0)
+        for color in ["red", "green", "blue", "yellow"]:
+            tabs.addTab(Color(color), "&" + color)
 
-        pagelayout.addLayout(button_layout)
-        pagelayout.addLayout(self.stacklayout)
-
-        btn = QPushButton("red")
-        btn.pressed.connect(self.activate_tab_1)
-        button_layout.addWidget(btn)
-        self.stacklayout.addWidget(Color("red"))
-
-        btn = QPushButton("green")
-        btn.pressed.connect(self.activate_tab_2)
-        button_layout.addWidget(btn)
-        self.stacklayout.addWidget(Color("green"))
-
-        btn = QPushButton("yellow")
-        btn.pressed.connect(self.activate_tab_3)
-        button_layout.addWidget(btn)
-        self.stacklayout.addWidget(Color("yellow"))
-
-        widget = QWidget()
-        widget.setLayout(pagelayout)
-        self.setCentralWidget(widget)
-
-    def activate_tab_1(self):
-        self.stacklayout.setCurrentIndex(0)
-
-    def activate_tab_2(self):
-        self.stacklayout.setCurrentIndex(1)
-
-    def activate_tab_3(self):
-        self.stacklayout.setCurrentIndex(2)
+        self.setCentralWidget(tabs)
 
 
 app = QApplication(sys.argv)
