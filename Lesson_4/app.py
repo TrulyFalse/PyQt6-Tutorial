@@ -1,6 +1,15 @@
 import sys
 
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QHBoxLayout, QVBoxLayout, QGridLayout
+from PyQt6.QtWidgets import (
+    QApplication,
+    QHBoxLayout,
+    QMainWindow,
+    QPushButton,
+    QStackedLayout,
+    QVBoxLayout,
+    QWidget,
+)
+
 from layout_colorwidget import Color
 
 
@@ -9,16 +18,44 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("My App")
 
-        layout = QGridLayout()
+        pagelayout = QVBoxLayout()
+        button_layout = QHBoxLayout()
+        self.stacklayout = QStackedLayout()
 
-        layout.addWidget(Color("red"), 0, 3, 4, 1)
-        layout.addWidget(Color("green"), 0, 0, 2, 2)    # this widget overlaps UNDER
-        layout.addWidget(Color("orange"), 1, 1, 2, 2)   # this one (more recent additions have higher z-index)
-        layout.addWidget(Color("blue"), 3, 0)
+        button_layout.setSpacing(0)
+        pagelayout.setContentsMargins(0,0,0,0)
+        pagelayout.setSpacing(0)
+
+        pagelayout.addLayout(button_layout)
+        pagelayout.addLayout(self.stacklayout)
+
+        btn = QPushButton("red")
+        btn.pressed.connect(self.activate_tab_1)
+        button_layout.addWidget(btn)
+        self.stacklayout.addWidget(Color("red"))
+
+        btn = QPushButton("green")
+        btn.pressed.connect(self.activate_tab_2)
+        button_layout.addWidget(btn)
+        self.stacklayout.addWidget(Color("green"))
+
+        btn = QPushButton("yellow")
+        btn.pressed.connect(self.activate_tab_3)
+        button_layout.addWidget(btn)
+        self.stacklayout.addWidget(Color("yellow"))
 
         widget = QWidget()
-        widget.setLayout(layout)
+        widget.setLayout(pagelayout)
         self.setCentralWidget(widget)
+
+    def activate_tab_1(self):
+        self.stacklayout.setCurrentIndex(0)
+
+    def activate_tab_2(self):
+        self.stacklayout.setCurrentIndex(1)
+
+    def activate_tab_3(self):
+        self.stacklayout.setCurrentIndex(2)
 
 
 app = QApplication(sys.argv)
