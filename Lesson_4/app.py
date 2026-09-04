@@ -1,6 +1,6 @@
 import sys
 
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QHBoxLayout, QVBoxLayout
+from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QHBoxLayout, QVBoxLayout, QGridLayout
 from layout_colorwidget import Color
 
 
@@ -9,28 +9,15 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("My App")
 
-        layout1 = QHBoxLayout()
-        layout2 = QVBoxLayout()
-        layout3 = QVBoxLayout()
+        layout = QGridLayout()
 
-        layout2.addWidget(Color("red"))
-        layout2.addWidget(Color("yellow"))
-        layout2.addWidget(Color("purple"))
-
-        layout1.setContentsMargins(0,0,0,0)
-        layout1.setSpacing(1)
-
-        layout1.addLayout(layout2)
-
-        layout1.addWidget(Color("green"))
-
-        layout3.addWidget(Color("red"))
-        layout3.addWidget(Color("purple"))
-
-        layout1.addLayout(layout3)
+        layout.addWidget(Color("red"), 0, 3)
+        layout.addWidget(Color("green"), 1, 1)
+        layout.addWidget(Color("orange"), 2, 2)
+        layout.addWidget(Color("blue"), 3, 0)
 
         widget = QWidget()
-        widget.setLayout(layout1)
+        widget.setLayout(layout)
         self.setCentralWidget(widget)
 
 
