@@ -11,9 +11,9 @@ class MainWindow(QMainWindow):
 
         layout = QGridLayout()
 
-        layout.addWidget(Color("red"), 0, 3)
-        layout.addWidget(Color("green"), 1, 1)
-        layout.addWidget(Color("orange"), 2, 2)
+        layout.addWidget(Color("red"), 0, 3, 4, 1)
+        layout.addWidget(Color("green"), 0, 0, 2, 2)    # this widget overlaps UNDER
+        layout.addWidget(Color("orange"), 1, 1, 2, 2)   # this one (more recent additions have higher z-index)
         layout.addWidget(Color("blue"), 3, 0)
 
         widget = QWidget()
